@@ -16,6 +16,7 @@ export const create = mutation({
         const message = await ctx.db.insert("messages", {
             clerkUserId: user._id,
             content: args.content,
+            name: user.username ?? user.email,
         });
 
         return message;

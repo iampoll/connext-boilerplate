@@ -16,5 +16,6 @@ export default defineSchema({
     messages: defineTable({
         clerkUserId: v.string(),
         content: v.string(),
+        name: v.string(),
     }).index("by_clerkUserId", ["clerkUserId"]),
 });

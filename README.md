@@ -16,6 +16,9 @@ A sleek and modern boilerplate for building web apps with **Convex**, **Next.js 
 
 ## 📝 TODO
 
--   [ ] Add **`features`** folder
--   [ ] Add detailed code examples for **Convex**
 -   [ ] Include starter templates for dashboards and landing pages.
+
+## ✅ Completed Tasks
+
+-   [x] Add **`features`** folder
+-   [x] Add detailed code examples for **Convex**

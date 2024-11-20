@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+
+import { Doc } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+
 import { useListMessages } from "../../api/use-list-messages";
+import { useQuery } from "convex/react";
 
 export const ListMessages = () => {
+    const user = useQuery(api.users.current);
+
     const { results, status, loadMore } = useListMessages();
     const containerRef = useRef<HTMLDivElement>(null);
     const sentinelRef = useRef<HTMLDivElement>(null);
@@ -32,11 +39,22 @@ export const ListMessages = () => {
         return <div>Loading...</div>;
     }
 
+    const sentByMe = (message: Doc<"messages">) => {
+        console.log(message.clerkUserId, user?._id);
+
+        return message.clerkUserId === user?._id;
+    };
+
     return (
         <div ref={containerRef} className="space-y-4">
             {results.map((message) => (
-                <div key={message._id} className="p-4 border rounded">
-                    {message.content}
+                <div
+                    key={message._id}
+                    className={`p-4 border rounded ${sentByMe(message) ? "text-right" : "text-left"}`}
+                >
+                    <p className="text-xs font-bold">{message.name}</p>
+
+                    <span>{message.content}</span>
                 </div>
             ))}
 

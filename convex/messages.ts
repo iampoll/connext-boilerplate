@@ -1,6 +1,7 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getCurrentUser } from "./users";
+import { paginationOptsValidator } from "convex/server";
 
 export const create = mutation({
     args: {
@@ -18,5 +19,20 @@ export const create = mutation({
         });
 
         return message;
+    },
+});
+
+export const list = query({
+    args: { paginationOpts: paginationOptsValidator },
+    handler: async (ctx, args) => {
+        const user = await getCurrentUser(ctx);
+        if (!user) {
+            throw new Error("Unauthorized");
+        }
+
+        return await ctx.db
+            .query("messages")
+            .order("desc")
+            .paginate(args.paginationOpts);
     },
 });

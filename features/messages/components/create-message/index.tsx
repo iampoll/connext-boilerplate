@@ -10,12 +10,15 @@ export default function CreateMessage() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (content.length === 0) return;
+
         mutate({ content }, { onSuccess: () => setContent("") });
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <input
+                required
                 type="text"
                 name="content"
                 value={content}

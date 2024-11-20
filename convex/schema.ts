@@ -11,5 +11,10 @@ export default defineSchema({
         lastName: v.optional(v.string()),
     })
         .index("by_username", ["username"])
-        .index("by_clerk_user_id", ["clerkUserId"]),
+        .index("by_clerkUserId", ["clerkUserId"]),
+
+    messages: defineTable({
+        clerkUserId: v.string(),
+        content: v.string(),
+    }).index("by_clerkUserId", ["clerkUserId"]),
 });

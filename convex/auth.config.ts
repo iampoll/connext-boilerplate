@@ -1,7 +1,7 @@
 export default {
     providers: [
         {
-            domain: "https://polished-pangolin-38.clerk.accounts.dev/",
+            domain: "https://composed-bison-32.clerk.accounts.dev/",
             applicationID: "convex",
         },
     ],

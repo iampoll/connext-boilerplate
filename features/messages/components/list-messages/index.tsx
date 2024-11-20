@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
+import { useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
 
 import { useListMessages } from "../../api/use-list-messages";
-import { useQuery } from "convex/react";
+import { DeleteMessageButton } from "./delete-message-button";
 
 export const ListMessages = () => {
     const user = useQuery(api.users.current);
@@ -40,22 +41,23 @@ export const ListMessages = () => {
     }
 
     const sentByMe = (message: Doc<"messages">) => {
-        console.log(message.clerkUserId, user?._id);
-
         return message.clerkUserId === user?._id;
     };
 
     return (
         <div ref={containerRef} className="space-y-4">
             {results.map((message) => (
-                <div
+                <section
                     key={message._id}
                     className={`p-4 border rounded ${sentByMe(message) ? "text-right" : "text-left"}`}
                 >
                     <p className="text-xs font-bold">{message.name}</p>
+                    {sentByMe(message) && (
+                        <DeleteMessageButton id={message._id} />
+                    )}
 
-                    <span>{message.content}</span>
-                </div>
+                    <p>{message.content}</p>
+                </section>
             ))}
 
             {status === "LoadingMore" && (

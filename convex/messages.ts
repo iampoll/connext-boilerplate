@@ -26,14 +26,16 @@ export const create = mutation({
 export const list = query({
     args: { paginationOpts: paginationOptsValidator },
     handler: async (ctx, args) => {
-        const user = await getCurrentUser(ctx);
-        if (!user) {
-            throw new Error("Unauthorized");
-        }
-
         return await ctx.db
             .query("messages")
             .order("desc")
             .paginate(args.paginationOpts);
+    },
+});
+
+export const deleteById = mutation({
+    args: { id: v.id("messages") },
+    handler: async (ctx, args) => {
+        return await ctx.db.delete(args.id);
     },
 });
